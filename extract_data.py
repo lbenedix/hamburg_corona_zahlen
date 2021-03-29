@@ -14,6 +14,7 @@ if __name__ == '__main__':
         soup = BeautifulSoup(i.read_text(), 'html.parser')
 
         if int(date) < 20210221002602:
+            continue
             print(date)
             for li in soup.find_all('li'):
                 li_txt = li.get_text().strip()
@@ -26,11 +27,57 @@ if __name__ == '__main__':
                     key = ' '.join(li_txt.split(' ')[:-1])
                     value = li_txt.split(' ')[-1]
                     item[key] = value
+        else:
+            print('\n🤔', date)
+            for h3 in soup.find_all('h3'):
+                h3: Tag
+                if 'teaser-headings' not in h3.attrs.get('class', []):
+                    continue
+
+                h3_txt = h3.get_text().strip()
+                if h3_txt in ('Bestätigte Fälle in Hamburg',
+                              'Schutzimpfungen in Hamburg',
+                              'Patienten in klinischer Behandlung',
+                              'Todesfälle in Hamburg',
+                              'Verteilung der Infizierten nach Alter und Geschlecht',
+                              'Entwicklung der Zahl der positiv auf COVID-19 getesteten Personen nach Bezirken',
+                              ):
+
+                    section = h3.parent.parent.parent
+                    for li in section.find_all('li'):
+                        li_txt = li.get_text().strip()
+                        # if 'Neuinfektionen:' in li_txt:
+                        #     item['Neuinfektionen'] = int(li_txt.split(': ')[-1])
+                        if 'Bestätigte Fälle:' in li_txt:
+                            item['Bestätigte Fälle'] = int(li_txt.split(': ')[-1])
+                        # elif 'Veränderung:' in li_txt:
+                        #     print('💡', li_txt)
+                        elif 'Erstimpfungen:' in li_txt:
+                            item['Erstimpfungen'] = int(li_txt.split(': ')[-1].split(' (')[0])
+                        elif 'Zweitimpfungen:' in li_txt:
+                            item['Zweitimpfungen'] = int(li_txt.split(': ')[-1].split(' (')[0])
+                        # elif 'Stationär gesamt:' in li_txt:
+                        #     print('🥸', li_txt)
+                        # elif 'Intensiv gesamt:' in li_txt:
+                        #     print('🥸', li_txt)
+                        # elif 'Intensiv aus Hamburg:' in li_txt:
+                        #     print('🥸', li_txt)
+                        elif 'Neue Todesfälle:' in li_txt:
+                            pass
+                            print('🥸', li_txt)
+                        elif 'Todesfälle:' in li_txt:
+                            item['Todesfälle'] = int(li_txt.split(': ')[-1])
+                        # elif '' in li_txt:
+                        #     item[''] = int(li_txt.split(': '))
+                        # print(li.get_text().strip())
 
         # tables seem to be stable
         for table in soup.find_all('table'):
             section = table.parent.parent
             section_header = section.find('h3').get_text()
+
+            print('#', section_header)
+            print(section.find('p').get_text())
 
             item[section_header] = dict()
 
@@ -68,11 +115,6 @@ if __name__ == '__main__':
                         'Fallzahlen': int(r['Fallzahlen']),
                         # 'Fälle vergangene 14 Tage': int(r['Fälle vergangene 14 Tage'])
                     }
-
-        # for p in soup.find_all('p'):
-        #     if 'fehlen Angaben' in p.get_text():
-        #         item['keine Angaben zu Alter und / oder Geschlecht']:{}
-        #         print(p.get_text().split(''))
 
         data[date] = item
 
