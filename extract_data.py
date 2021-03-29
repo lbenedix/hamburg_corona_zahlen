@@ -27,12 +27,12 @@ if __name__ == '__main__':
                     value = li_txt.split(' ')[-1]
                     item[key] = value
 
-
         # tables seem to be stable
         for table in soup.find_all('table'):
-            section = table.parent.parent.find('h3').get_text()
+            section = table.parent.parent
+            section_header = section.find('h3').get_text()
 
-            item[section] = dict()
+            item[section_header] = dict()
 
             headers = [header.text for header in table.find_all('th')]
             results = [{headers[i]: cell.get_text() for i, cell in enumerate(row.find_all('td'))}
@@ -41,7 +41,7 @@ if __name__ == '__main__':
             for r in results:
                 if len(r) == 0:
                     continue
-                if 'Patienten in klinischer Behandlung' == section:
+                if 'Patienten in klinischer Behandlung' == section_header:
                     key = ''
                     try:
                         key = r['Abteilung']
@@ -54,16 +54,25 @@ if __name__ == '__main__':
                     except ValueError:
                         value = None
 
-                    item[section][key] = value
+                    item[section_header][key] = value
 
-                elif 'Verteilung der Infizierten nach Alter und Geschlecht' == section:
-                    item[section][r['Alter']] = {'männlich': int(r['männlich']),
+                elif 'Verteilung der Infizierten nach Alter und Geschlecht' == section_header:
+                    item[section_header][r['Alter']] = {'männlich': int(r['männlich']),
                                                  'weiblich': int(r['weiblich'])}
-                elif 'Entwicklung der Zahl der positiv auf COVID-19 getesteten Personen nach Bezirken' == section:
-                    item[section][r['Bezirk']] = {
+                    caption = section.find('p').get_text()
+                    if 'Fällen fehlen Angaben zu Alter und / oder Geschlecht' in caption:
+                        number_unknown = caption.split(' bei ')[-1].split(' ')[0]
+                        item[section_header]['unbekannt'] = int(number_unknown)
+                elif 'Entwicklung der Zahl der positiv auf COVID-19 getesteten Personen nach Bezirken' == section_header:
+                    item[section_header][r['Bezirk']] = {
                         'Fallzahlen': int(r['Fallzahlen']),
                         # 'Fälle vergangene 14 Tage': int(r['Fälle vergangene 14 Tage'])
                     }
+
+        # for p in soup.find_all('p'):
+        #     if 'fehlen Angaben' in p.get_text():
+        #         item['keine Angaben zu Alter und / oder Geschlecht']:{}
+        #         print(p.get_text().split(''))
 
         data[date] = item
 
