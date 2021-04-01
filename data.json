@@ -27397,5 +27397,88 @@
         "Fallzahlen": 13993
       }
     }
+  },
+  "20210401095334": {
+    "Bestätigte Fälle": 61809,
+    "Patienten in klinischer Behandlung": {
+      "Stationär gesamt": 277,
+      "Normalstation gesamt": 188,
+      "Normalstation aus Hamburg": 169,
+      "Intensiv gesamt": 89,
+      "Intensiv aus Hamburg": 72
+    },
+    "Verteilung der Infizierten nach Alter und Geschlecht": {
+      "bis 5 Jahre": {
+        "männlich": 985,
+        "weiblich": 779
+      },
+      "unbekannt": 461,
+      "6 bis 14 Jahre": {
+        "männlich": 1878,
+        "weiblich": 1695
+      },
+      "15 bis 19 Jahre": {
+        "männlich": 1728,
+        "weiblich": 1755
+      },
+      "20 bis 29 Jahre": {
+        "männlich": 5571,
+        "weiblich": 5799
+      },
+      "30 bis 39 Jahre": {
+        "männlich": 5318,
+        "weiblich": 5505
+      },
+      "40 bis 49 Jahre": {
+        "männlich": 4233,
+        "weiblich": 4524
+      },
+      "50 bis 59 Jahre": {
+        "männlich": 4203,
+        "weiblich": 4105
+      },
+      "60 bis 69 Jahre": {
+        "männlich": 2264,
+        "weiblich": 2060
+      },
+      "70 bis 79 Jahre": {
+        "männlich": 1505,
+        "weiblich": 1516
+      },
+      "80 bis 89 Jahre": {
+        "männlich": 1208,
+        "weiblich": 1991
+      },
+      "über 90 Jahre": {
+        "männlich": 277,
+        "weiblich": 990
+      }
+    },
+    "Entwicklung der Zahl der positiv auf COVID-19 getesteten Personen nach Bezirken": {
+      "Altona": {
+        "Fallzahlen": 7965
+      },
+      "Bergedorf": {
+        "Fallzahlen": 4047
+      },
+      "Eimsbüttel": {
+        "Fallzahlen": 6590
+      },
+      "Hamburg Mitte": {
+        "Fallzahlen": 13285
+      },
+      "Hamburg Nord": {
+        "Fallzahlen": 8165
+      },
+      "Harburg": {
+        "Fallzahlen": 6305
+      },
+      "Wandsbek": {
+        "Fallzahlen": 13993
+      }
+    },
+    "Erstimpfungen": 213839,
+    "Zweitimpfungen": 90757,
+    "Todesfälle": 1382
   }
 }
