@@ -1,4 +1,25 @@
 <?php
+/*
+CREATE TABLE `data` (
+  `date` date NOT NULL,
+  `id_column` int UNSIGNED NOT NULL,
+  `value` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `data`
+  ADD UNIQUE KEY `date` (`date`,`id_column`);
+COMMIT;
+
+CREATE TABLE `columns` (
+  `id` int UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `columns`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `title` (`title`);
+*/
+
 
 $importer = new Importer();
 $data = json_decode(file_get_contents('./data.json'), 1);
